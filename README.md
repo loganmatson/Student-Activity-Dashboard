@@ -8,9 +8,9 @@
 <ul>
   <li>Maadhavan Muthuselvan @maadhavan23</li>
   <li>Kendall Babbs @kendallbabbs</li>
-  <li>Loski Jin@LoskiJin</li>
-  <li>Saisha Badgujar@saishabadgujar</li>
-  <li>Logan Maston</li>
+  <li>Loski Jin @LoskiJin</li>
+  <li>Saisha Badgujar @saishabadgujar</li>
+  <li>Logan Maston @loganmatson</li>
 </ul>
 
 <h2>Scenario Description:</h2>
