@@ -66,7 +66,6 @@
 <p>The model does not store non-academic personal information, such as student financial details or personal identifiers beyond basic contact info. Administrative data related to course scheduling, room assignments, or faculty payroll is not included. Non-course-related student activities, such as extracurricular involvement, internships, or personal counseling records, are not supported.</p>
 
 <h2> Data Dictionary</h2>
-![assignemnt1](https://github.com/user-attachments/assets/f4cd4e40-21ef-48c6-a6f6-7de02e19663f)
 
 
 ![class session](https://github.com/user-attachments/assets/0ab1ba3d-592b-4a4c-a88c-98896960046c)
@@ -96,13 +95,13 @@
 ![ta1](https://github.com/user-attachments/assets/e37f2f00-10af-40ea-baed-1379d8f9287b)
 
 
-<h2>10 Queries:</h2>
+<h1>10 Queries:</h1>
 <p>
 
-![Query Table]<img width="683" alt="Screenshot 2024-10-17 at 2 32 48 PM" src="https://github.com/user-attachments/assets/9e10a421-1b20-4eb3-8296-fde2531e9a69">
+<img width="683" alt="Screenshot 2024-10-17 at 2 32 48 PM" src="https://github.com/user-attachments/assets/9e10a421-1b20-4eb3-8296-fde2531e9a69">
 
 **Q1**
-**What the query does:**
+**What the query does: **
 This query calculates each student’s weighted exam grade by summing the points they received and dividing it by the total possible points for all their exams. It lists students with an average exam grade below 70%, ordered by their grade in descending order.
 **Why is this relevant?**
 Provides information regarding what portion of our student population is struggling in class, specifically on exams, and which students would benefit with extra faculty support or intervention.
@@ -119,7 +118,7 @@ ORDER BY weighted_exam_grade DESC;
 ```
 
 **Results:**
-![Q1 Results]<img width="311" alt="Screenshot 2024-10-17 at 1 56 55 PM" src="https://github.com/user-attachments/assets/c3b01aa3-437d-4737-bf6a-03d2d08f9389">
+<img width="311" alt="Screenshot 2024-10-17 at 1 56 55 PM" src="https://github.com/user-attachments/assets/c3b01aa3-437d-4737-bf6a-03d2d08f9389">
 
 
 **Q2**
@@ -139,7 +138,7 @@ ORDER BY CONCAT(Student.firstName,' ',Student.lastName);
 ```
 
 **Results:**
-![Q2 Results]<img width="480" alt="Screenshot 2024-10-17 at 1 57 07 PM" src="https://github.com/user-attachments/assets/30b03a42-d83d-4b05-80d1-d740917a7913">
+<img width="480" alt="Screenshot 2024-10-17 at 1 57 07 PM" src="https://github.com/user-attachments/assets/30b03a42-d83d-4b05-80d1-d740917a7913">
 
 
 **Q3**
@@ -161,7 +160,7 @@ GROUP BY Student.studentID, Course.courseID
 ORDER BY total_points_earned DESC;
 ```
 **Results:**
-![Q3 Results] <img width="530" alt="Screenshot 2024-10-17 at 1 57 19 PM" src="https://github.com/user-attachments/assets/d914903d-f6a8-4b94-b147-9e2e852391be">
+<img width="530" alt="Screenshot 2024-10-17 at 1 57 19 PM" src="https://github.com/user-attachments/assets/d914903d-f6a8-4b94-b147-9e2e852391be">
 
 
 **Q4**
@@ -187,7 +186,7 @@ ORDER BY average_exam_score DESC;
 ```
 
 **Results:**
-![Q4 Results] <img width="562" alt="Screenshot 2024-10-17 at 1 57 33 PM" src="https://github.com/user-attachments/assets/4e1cfe29-d8ef-487d-b030-03ba5db98143">
+ <img width="562" alt="Screenshot 2024-10-17 at 1 57 33 PM" src="https://github.com/user-attachments/assets/4e1cfe29-d8ef-487d-b030-03ba5db98143">
 
 
 **Q5**
@@ -213,7 +212,7 @@ ORDER BY students_above_80 DESC;
 ```
 
 **Results:**
-![Q5 Results] <img width="471" alt="Screenshot 2024-10-17 at 1 57 42 PM" src="https://github.com/user-attachments/assets/f6bcbae6-f285-40c1-8520-2d510c2b170d">
+<img width="471" alt="Screenshot 2024-10-17 at 1 57 42 PM" src="https://github.com/user-attachments/assets/f6bcbae6-f285-40c1-8520-2d510c2b170d">
 
 
 **Q6**
@@ -236,7 +235,7 @@ ORDER BY total_courses_taught DESC;
 ```
 
 **Results:**
-![Q6 Results] <img width="502" alt="Screenshot 2024-10-17 at 1 57 52 PM" src="https://github.com/user-attachments/assets/e666415d-2501-4471-967a-edb29401001f">
+<img width="502" alt="Screenshot 2024-10-17 at 1 57 52 PM" src="https://github.com/user-attachments/assets/e666415d-2501-4471-967a-edb29401001f">
 
 
 **Q7**
@@ -253,7 +252,7 @@ WHERE materialType = 'Textbook';
 ```
 
 **Results:**
-![Q7 Results] <img width="273" alt="Screenshot 2024-10-17 at 1 58 02 PM" src="https://github.com/user-attachments/assets/18536e20-582f-4510-861c-7f74e388f1f3">
+<img width="273" alt="Screenshot 2024-10-17 at 1 58 02 PM" src="https://github.com/user-attachments/assets/18536e20-582f-4510-861c-7f74e388f1f3">
 
 
 **Q8**
@@ -269,7 +268,7 @@ WHERE dueDate BETWEEN '2024-10-18' AND '2024-11-20';
 ```
 
 **Results:**
-![Q8 Results] <img width="203" alt="Screenshot 2024-10-17 at 1 58 11 PM" src="https://github.com/user-attachments/assets/652e0cb6-3c46-4094-96ed-9a9d52b2735e">
+<img width="203" alt="Screenshot 2024-10-17 at 1 58 11 PM" src="https://github.com/user-attachments/assets/652e0cb6-3c46-4094-96ed-9a9d52b2735e">
 
 
 **Q9**
@@ -288,7 +287,7 @@ ORDER BY total_credit_hours DESC;
 ```
 
 **Results:** 
-![Q9 Results] <img width="258" alt="Screenshot 2024-10-17 at 1 58 20 PM" src="https://github.com/user-attachments/assets/14276965-ae11-47ea-9335-0ab6bbd6dcff">
+<img width="258" alt="Screenshot 2024-10-17 at 1 58 20 PM" src="https://github.com/user-attachments/assets/14276965-ae11-47ea-9335-0ab6bbd6dcff">
 
 
 **Q10**
@@ -306,7 +305,7 @@ JOIN Professor ON TeachingAssistant.Professor_professorID = Professor.professorI
 ```
 
 **Results:**
-![Q10 Results]<img width="449" alt="Screenshot 2024-10-17 at 1 58 31 PM" src="https://github.com/user-attachments/assets/7c069173-5c54-4b1c-ac8c-0956b5b9502b">
+<img width="449" alt="Screenshot 2024-10-17 at 1 58 31 PM" src="https://github.com/user-attachments/assets/7c069173-5c54-4b1c-ac8c-0956b5b9502b">
   
   .</p>
 
