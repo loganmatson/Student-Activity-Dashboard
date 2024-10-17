@@ -96,6 +96,224 @@
 ![ta1](https://github.com/user-attachments/assets/e37f2f00-10af-40ea-baed-1379d8f9287b)
 
 
+<h2>10 Queries:</h2>
+<p>
+
+![Query Table]<img width="683" alt="Screenshot 2024-10-17 at 2 32 48 PM" src="https://github.com/user-attachments/assets/9e10a421-1b20-4eb3-8296-fde2531e9a69">
+
+**Q1**
+**What the query does:**
+This query calculates each student’s weighted exam grade by summing the points they received and dividing it by the total possible points for all their exams. It lists students with an average exam grade below 70%, ordered by their grade in descending order.
+**Why is this relevant?**
+Provides information regarding what portion of our student population is struggling in class, specifically on exams, and which students would benefit with extra faculty support or intervention.
+***Which students have an average exam grade under 70%?***
+```ruby
+SELECT Student.studentID, Student.firstName, Student.lastName,
+(SUM(Exam.pointsReceived) / SUM(Exam.pointsPossible)) * 100 AS weighted_exam_grade
+FROM Student
+JOIN Enrollment ON Student.studentID = Enrollment.Student_studentID
+JOIN Exam ON Enrollment.EnrollmentID = Exam.Enrollment_EnrollmentID
+GROUP BY Student.studentID, Student.firstName, Student.lastName
+HAVING weighted_exam_grade < 70
+ORDER BY weighted_exam_grade DESC;
+```
+
+**Results:**
+![Q1 Results]<img width="311" alt="Screenshot 2024-10-17 at 1 56 55 PM" src="https://github.com/user-attachments/assets/c3b01aa3-437d-4737-bf6a-03d2d08f9389">
+
+
+**Q2**
+**What the query does:**
+This query retrieves a list of students, along with the courses they are enrolled in and the professor teaching the course. The results are sorted by student name.
+**Why is this relevant?**
+This query allows universities to monitor which professors are teaching specific courses and which students are enrolled in them. By analyzing this information, universities can better understand faculty workloads, student distribution across courses, and potentially identify correlations between student performance and the professors teaching the courses. This can support data-driven decisions regarding course offerings and faculty assignments.
+***Which students are enrolled in what courses, and which professors are teaching said courses?***
+```ruby
+SELECT DISTINCT CONCAT(Student.firstName,' ', Student.lastName) AS studentName, Course.courseName, Professor.profFirstName, Professor.profLastName
+FROM Enrollment
+JOIN Student ON Enrollment.Student_studentID = Student.studentID
+JOIN Course ON Enrollment.Course_courseID = Course.courseID
+JOIN ClassSession ON Course.courseID = ClassSession.Course_courseID
+JOIN Professor ON ClassSession.Professor_professorID = Professor.professorID
+ORDER BY CONCAT(Student.firstName,' ',Student.lastName);
+```
+
+**Results:**
+![Q2 Results]<img width="480" alt="Screenshot 2024-10-17 at 1 57 07 PM" src="https://github.com/user-attachments/assets/30b03a42-d83d-4b05-80d1-d740917a7913">
+
+
+**Q3**
+**What the query does:**
+This query shows the total number of exams taken and the total points earned by each student, grouped by course. It lists the students with the highest total points earned across all exams in each course.
+**Why is this relevant?**
+This query is significant because it provides a detailed view of student performance by tracking how many exams each student has taken in a specific course and the total points they have earned. By analyzing this data, universities can identify high-performing students, evaluate exam participation, and detect potential issues where students may be struggling. This information can be used to improve teaching strategies, adjust course content, or offer additional academic support, ultimately enhancing student success and academic outcomes.
+***How many exams have students taken in specific courses and what is the total number of points they have earned on those exams?***
+```ruby
+SELECT DISTINCT CONCAT(Student.firstName,' ', Student.lastName) AS studentName, Course.courseName, 
+       COUNT(Exam.examID) AS total_exams_taken, 
+       SUM(Exam.pointsReceived) AS total_points_earned
+FROM Enrollment
+JOIN Student ON Enrollment.Student_studentID = Student.studentID
+JOIN Course ON Enrollment.Course_courseID = Course.courseID
+JOIN Exam ON Enrollment.Student_studentID = Exam.Enrollment_Student_studentID 
+           AND Enrollment.Course_courseID = Exam.Enrollment_Course_courseID
+GROUP BY Student.studentID, Course.courseID
+ORDER BY total_points_earned DESC;
+```
+**Results:**
+![Q3 Results] <img width="530" alt="Screenshot 2024-10-17 at 1 57 19 PM" src="https://github.com/user-attachments/assets/d914903d-f6a8-4b94-b147-9e2e852391be">
+
+
+**Q4**
+**What the query does:**
+This query provides a summary of the number of students enrolled in each course, the average exam score for the course, and the professor teaching the course. It ranks courses based on the average exam score.
+**Why is this relevant?**
+This query is significant because it gives a comprehensive view of how well students are performing in different courses and which professors are teaching them. By analyzing the average exam scores alongside student enrollment numbers, universities can identify high-achieving courses, evaluate the effectiveness of teaching methods, and make data-driven decisions on resource allocation. This helps improve the quality of education, ensuring that courses with lower average scores receive the necessary attention to enhance student learning outcomes.
+***What is the average exam score for each course, and what is the total number of students enrolled in that course, as well as the professor teaching the course?***
+```ruby
+SELECT Course.courseName, 
+       Professor.profFirstName, 
+       Professor.profLastName, 
+       COUNT(DISTINCT Enrollment.Student_studentID) AS total_students, 
+       (ROUND(AVG(Exam.pointsReceived) / (SELECT AVG(Exam.pointsPossible) FROM Exam) * 100,2)) AS average_exam_score
+FROM Enrollment
+JOIN Course ON Enrollment.Course_courseID = Course.courseID
+JOIN ClassSession ON Course.courseID = ClassSession.Course_courseID
+JOIN Professor ON ClassSession.Professor_professorID = Professor.professorID
+JOIN Exam ON Enrollment.Student_studentID = Exam.Enrollment_Student_studentID 
+           AND Enrollment.Course_courseID = Exam.Enrollment_Course_courseID
+GROUP BY Course.courseName, Professor.profFirstName, Professor.profLastName
+ORDER BY average_exam_score DESC;
+```
+
+**Results:**
+![Q4 Results] <img width="562" alt="Screenshot 2024-10-17 at 1 57 33 PM" src="https://github.com/user-attachments/assets/4e1cfe29-d8ef-487d-b030-03ba5db98143">
+
+
+**Q5**
+**What the query does:**
+This query returns the number of students who scored above 80 points on exams in each course, along with the professor teaching the course. It ranks courses by the number of high-performing students.
+**Why is this relevant?**
+This query is significant because it helps identify courses where students are performing exceptionally well on exams. By understanding which courses have the most students scoring above a certain threshold, universities can recognize successful teaching practices and course content that lead to better student outcomes. Additionally, this information can help identify which professors may be particularly effective in fostering student success, providing a basis for recognizing and rewarding impactful teaching methods.
+***Which courses have students that have scored above 80 points on their exams, and which professors are teaching said courses?***
+```ruby
+SELECT Course.courseName, 
+       Professor.profFirstName, 
+       Professor.profLastName, 
+       COUNT(DISTINCT Enrollment.Student_studentID) AS students_above_80
+FROM Enrollment
+JOIN Course ON Enrollment.Course_courseID = Course.courseID
+JOIN ClassSession ON Course.courseID = ClassSession.Course_courseID
+JOIN Professor ON ClassSession.Professor_professorID = Professor.professorID
+JOIN Exam ON Enrollment.Student_studentID = Exam.Enrollment_Student_studentID 
+           AND Enrollment.Course_courseID = Exam.Enrollment_Course_courseID
+WHERE Exam.pointsReceived > 80
+GROUP BY Course.courseName, Professor.profFirstName, Professor.profLastName
+ORDER BY students_above_80 DESC;
+```
+
+**Results:**
+![Q5 Results] <img width="471" alt="Screenshot 2024-10-17 at 1 57 42 PM" src="https://github.com/user-attachments/assets/f6bcbae6-f285-40c1-8520-2d510c2b170d">
+
+
+**Q6**
+**What the query does:**
+This query calculates how many courses each professor has taught, as well as the average number of students per course. It ranks professors based on the total number of courses taught.
+**Why is this relevant?**
+This query is significant because it gives universities a clear view of the distribution of teaching responsibilities among professors and the student-to-course ratio in each professor’s classes. It helps to identify which professors have the heaviest teaching loads and which ones manage the largest classes. This information is useful for making equitable teaching assignments, improving faculty workload management, and ensuring students have an optimal learning environment.
+***How many courses is each professor teaching, and what is the average number of students enrolled in those courses?***
+```ruby
+SELECT Professor.profFirstName, 
+       Professor.profLastName, 
+       COUNT(DISTINCT Course.courseID) AS total_courses_taught, 
+       AVG(COUNT(Enrollment.Student_studentID)) OVER (PARTITION BY Professor.professorID) AS average_students_per_course
+FROM ClassSession
+JOIN Professor ON ClassSession.Professor_professorID = Professor.professorID
+JOIN Course ON ClassSession.Course_courseID = Course.courseID
+JOIN Enrollment ON Course.courseID = Enrollment.Course_courseID
+GROUP BY Professor.professorID, Professor.profFirstName, Professor.profLastName
+ORDER BY total_courses_taught DESC;
+```
+
+**Results:**
+![Q6 Results] <img width="502" alt="Screenshot 2024-10-17 at 1 57 52 PM" src="https://github.com/user-attachments/assets/e666415d-2501-4471-967a-edb29401001f">
+
+
+**Q7**
+**What the query does:**
+This query lists all courses that use textbooks as their course material.
+**Why is this relevant?**
+Universities must manage their inventory and need to ensure that the required textbooks are available on campus or through online resources. This also allows universities to potentially look at cheaper alternatives for students, such as digital versions to reduce costs. 
+***Which courses have a textbook as one of their course materials?***
+```ruby
+SELECT materialType, Course.courseID, Course.courseName
+FROM CourseMaterials
+JOIN Course ON CourseMaterials.Course_courseID = Course.courseID
+WHERE materialType = 'Textbook';
+```
+
+**Results:**
+![Q7 Results] <img width="273" alt="Screenshot 2024-10-17 at 1 58 02 PM" src="https://github.com/user-attachments/assets/18536e20-582f-4510-861c-7f74e388f1f3">
+
+
+**Q8**
+**What the query does:**
+This query retrieves all assignments that are due between October 18, 2024, and November 20, 2024.
+**Why is this relevant?**
+By tracking assignment deadlines, specifically ones in the heat of midterms and before Thanksgiving Break, the university can identify when students might need additional support and offer resources to help reduce student stress.
+***Which assignments are due in between October 18th and November 20th?**
+```ruby
+SELECT assignmentID, assignmentTitle
+FROM Assignment
+WHERE dueDate BETWEEN '2024-10-18' AND '2024-11-20';
+```
+
+**Results:**
+![Q8 Results] <img width="203" alt="Screenshot 2024-10-17 at 1 58 11 PM" src="https://github.com/user-attachments/assets/652e0cb6-3c46-4094-96ed-9a9d52b2735e">
+
+
+**Q9**
+**What the query does:**
+This query calculates the total credit hours students have accumulated, grouped by major, and orders the majors by the total credit hours earned.
+**Why is this relevant?**
+This query helps universities manage course offerings and resources, while also ensuring students are meeting the minimum number of hours for scholarships, financial aid, and even graduation.
+***What is the total number of credit hours taken by students of different majors?***
+```ruby
+SELECT Student.major, SUM(Course.courseCredits) AS total_credit_hours
+FROM Enrollment
+JOIN Student ON Enrollment.Student_studentID = Student.studentID
+JOIN Course ON Enrollment.Course_courseID = Course.courseID
+GROUP BY Student.major
+ORDER BY total_credit_hours DESC;
+```
+
+**Results:** 
+![Q9 Results] <img width="258" alt="Screenshot 2024-10-17 at 1 58 20 PM" src="https://github.com/user-attachments/assets/14276965-ae11-47ea-9335-0ab6bbd6dcff">
+
+
+**Q10**
+**What the query does:**
+This query retrieves a list of teaching assistants (TAs), their associated professors, and their contact information (email addresses).
+**Why is this relevant?**
+This query helps universities manage communication, responsibilities, and expectations of both professors and teaching assistants. Having a list of TAs and professors can facilitate a balanced workload for courses and ensure smooth communication between the University and its instructors. 
+***Which TA’s are associated with each professor? Include their contact information.***
+```ruby
+SELECT CONCAT(TeachingAssistant.taFirstName,' ', TeachingAssistant.taLastName) AS taName, CONCAT(
+Professor.profFirstName,' ', Professor.profLastname) AS professorName, 
+TeachingAssistant.taEmail, Professor.profEmail
+FROM TeachingAssistant
+JOIN Professor ON TeachingAssistant.Professor_professorID = Professor.professorID;
+```
+
+**Results:**
+![Q10 Results]<img width="449" alt="Screenshot 2024-10-17 at 1 58 31 PM" src="https://github.com/user-attachments/assets/7c069173-5c54-4b1c-ac8c-0956b5b9502b">
+  
+  .</p>
+
+
+
+
+
 
 
 
