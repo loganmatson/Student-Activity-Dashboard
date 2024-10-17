@@ -19,26 +19,32 @@
 
 <h2>Data Model</h2>
 
-![hbjpg](https://github.com/user-attachments/assets/a1b0479f-2c81-4c29-810a-78feeea43537)
+![hbjpg](https://github.com/user-attachments/assets/4b30a78a-b0ec-4cf8-a86c-a22375b9e21c)
+
+
 
 
 
 <p>The data model presented is designed to support the storage of academic data related to courses, students, faculty, and assessments within a university setting.</p>
 
 <h3>1. Student:</h3>
-<p>Stores basic information about each student, such as their ID, name, email, enrollment date, and major. Each student can enroll in multiple courses, creating a many-to-many relationship with the Course entity, managed through the Enrollment entity.</p>
+<p>Stores basic information about each student, such as their ID, name, email, enrollment date, and major. Each student can enroll in multiple courses, creating a many-to-many relationship with the Course entity, managed through the Enrollment associative entity.</p>
 
 <h3>2. Course:</h3>
-<p>Represents individual courses with details like course ID, name, description, credits, and type. Each course is linked to a courseType, which categorizes the course (e.g., lecture, lab). Courses can have multiple Class Sessions, each taught by a professor and attended by students.</p>
+<p>Represents individual courses with details like course ID, name, description, credits, and type. Each course has a courseType, which categorizes the course (e.g., lecture, lab). Courses can have multiple Class Sessions, each taught by a professor and attended by students. Each Course can also have multiple TA's.</p>
 
 <h3>3. CourseType:</h3>
-<p>Provides a way to categorize courses by type (e.g., lecture, seminar, lab) and includes a description. Each Course is assigned a single course type.</p>
+<p>Provides a way to categorize courses by type/medium (e.g., lecture, seminar, lab) and includes a description. Each Course is assigned a single course type.</p>
 
-<h3>4. Enrollment:</h3>
-<p>Functions as a link between Student and Course, representing each student's enrollment in specific courses. Contains additional details about the enrollment, such as enrollment date and status. Through this entity, students are associated with Assignments, Exams, and Quizzes, which are further connected to specific courses.</p>
+<h3>4. Course Materials:</h3>
+<p>An entity used to associate certain materials with certain courses, managed through an unique material ID, and an identifying relationship from Course, carrying with it are Foreign Keys, courseID and courseTypeID. The reasoning behind this composite key set is due to different mediums of a course may require different materials, and different courses through a similar medium may require the same material, and a course with a given medium may require different materials.</p>
 
-<h3>5. Class Session:</h3>
-<p>Represents individual class sessions, capturing details like the date, topic, and attendance status. Each session is tied to a specific Course and a unique Professor.</p>
+
+<h3>5. Enrollment:</h3>
+<p>Functions as a associative entity between the Student and Course many-to-many relationship, representing each student's enrollment in specific courses. Contains additional details about the enrollment, such as enrollment date and status. Through this entity, students are associated with Assignments, Exams, and Quizzes, which are further connected to specific courses. With a unique ID for each enrollment, this entity supports withdrawls and re-enrollment.</p>
+
+<h3>6. Class Session:</h3>
+<p>Represents individual class sessions, capturing details like the date, topic, and attendance status. Each session is tied to a unique Course and a unique Professor.</p>
 
 <h3>6. Professor:</h3>
 <p>Holds information about professors, including their ID, name, email, and their faculty affiliation. Professors can teach multiple courses and are linked to the Faculty entity to indicate their department or college.</p>
@@ -46,14 +52,10 @@
 <h3>7. Teaching Assistant (TA):</h3>
 <p>Stores details about TAs and connects them with both a Course and a supervising Professor. TAs are assigned to specific courses to assist with course-related activities.</p>
 
-
 <h3>8. Faculty:</h3>
-<p>Represents faculty departments, such as "Science" or "Humanities," with which Professors are affiliated. Helps categorize professors and organize them under specific academic divisions.</p>
+<p>Represents faculty departments, such as "Science" or "Humanities," with which Professors are affiliated. Helps categorize professors and organize them under specific academic divisions. Also can help seperate their administrative duties versus their teaching ones</p>
 
-<h3>9. Course Materials:</h3>
-<p>Includes information about materials used for each course, like textbooks, slides, or other resources. Links directly to specific courses and includes material type and title.</p>
-
-<h3>10. Assignment, Exam, and Quiz:</h3>
+<h3>9. Assignment, Exam, and Quiz:</h3>
 <p>Store details about assessments, including titles, points possible, and dates. Linked to the Enrollment entity, allowing each assessment to be associated with a particular student’s course enrollment.</p>
 
 <h2>Supported Data:</h2>
