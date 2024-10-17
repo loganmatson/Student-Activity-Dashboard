@@ -310,8 +310,11 @@ JOIN Professor ON TeachingAssistant.Professor_professorID = Professor.professorI
   
   .</p>
 
+<h2>Database Information</h2>
 
-
+<p>
+**Name of the Database:** ns_4610Fa2024Group5
+  .</p>
 
 
 
