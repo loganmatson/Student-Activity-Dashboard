@@ -6,11 +6,12 @@
 
 <h2>Team Members:</h2>
 <ul>
-  <li>Maadhavan Muthuselvan @maadhavan23</li>
-  <li>Kendall Babbs @kendallbabbs</li>
-  <li>Loski Jin @LoskiJin</li>
-  <li>Saisha Badgujar @saishabadgujar</li>
-  <li>Logan Maston @loganmatson</li>
+- [Maadhavan Muthuselvan](https://github.com/maadhavan23)
+- [Kendall Babbs](https://github.com/kendallbabbs)
+- [Loski Jin](https://github.com/LoskiJin)
+- [Saisha Badgujar](https://github.com/saishabadgujar)
+- [Logan Maston](https://github.com/loganmatson)
+
 </ul>
 
 <h2>Scenario Description:</h2>
