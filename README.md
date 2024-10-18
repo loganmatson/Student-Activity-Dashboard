@@ -315,7 +315,8 @@ JOIN Professor ON TeachingAssistant.Professor_professorID = Professor.professorI
 **Name of the Database:** ns_4610Fa2024Group5
   .</p>
 
-
+<h2>Slide Deck</h2>
+<p>https://docs.google.com/presentation/d/1OWlBuYYSYPyEmiUCNr9bvBfdD6okKhJojko2jZ9CBJM/edit?usp=sharing<ahref>https://docs.google.com/presentation/d/1OWlBuYYSYPyEmiUCNr9bvBfdD6okKhJojko2jZ9CBJM/edit?usp=sharing</ahref></p>
 
 
 
